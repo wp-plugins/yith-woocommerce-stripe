@@ -1,4 +1,4 @@
-=== YITH WooCommerce Stripe ===
+﻿=== YITH WooCommerce Stripe ===
 
 Contributors: yithemes
 Tags: stripe, gateway, payments, yithemes, woocommerce, shop, ecommerce, e-commerce
@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The YITH WooCommerce Stripe plugin let you add a new payment gateway based on [Stripe.com](https://stripe.com/).
+The YITH WooCommerce Stripe plugin let you add a new payment gateway based on Stripe.com
 
 
 == Description ==
