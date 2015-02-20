@@ -13,8 +13,7 @@ The YITH WooCommerce Stripe plugin let you add a new payment gateway based on St
 
 == Description ==
 
-Stripe è un'estensione di WooCommerce, con la quale aggiungere un nuovo gateway di pagamento nel tuo sito ecommerce e
-dare la possibilità ai tuoi utenti di pagare direttamente con carta di credito, tramite il checkout di Stripe.com.
+Stripe is a WooCommerce extension, that allows you add a new payment gateway into your e-commerce website and gives your users the possibility to pay directly by credit card through Stripe.com checkout.
 
 Stripe is available in the United States, Canada, the UK, Australia, Belgium, France, Germany, Ireland, The Netherlands and more – see [What countries does stripe support?](https://support.stripe.com/questions/what-countries-does-stripe-support)
 
