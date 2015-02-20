@@ -49,7 +49,7 @@ Here we provide support, not on wordpress.org were, usually we do not read topic
 
 == Frequently Asked Questions ==
 
-= Does this plugin support [Stripe Checkout?](https://stripe.com/checkout) =
+= Does this plugin support Stripe Checkout? =
 Yes it does! After user has compiled all information on checkout page, you will be redirect to payment page where there is the Stripe Checkout button and pay.
 
 = Which countries does Stripe support? =
