@@ -1,34 +1,32 @@
 ﻿=== YITH WooCommerce Stripe ===
 
 Contributors: yithemes
-Tags: stripe, gateway, payments, yithemes, woocommerce, shop, ecommerce, e-commerce
+Tags: stripe, simple stripe checkout, stripe checkout, credit cards, online payment, payment, payments, recurring billing, subscribe, subscriptions, bitcoin, gateway, yithemes, woocommerce, shop, ecommerce, e-commerce
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 The YITH WooCommerce Stripe plugin let you add a new payment gateway based on Stripe.com
 
-
 == Description ==
 
-Stripe is a WooCommerce extension, that allows you add a new payment gateway into your e-commerce website and gives your users the possibility to pay directly by credit card through Stripe.com checkout.
+Stripe is a WooCommerce extension, that allows you add a new payment gateway into your e-commerce website and gives your
+users the possibility to pay directly by credit card through Stripe.com checkout.
 
-Stripe is available in the United States, Canada, the UK, Australia, Belgium, France, Germany, Ireland, The Netherlands and more – see [What countries does stripe support?](https://support.stripe.com/questions/what-countries-does-stripe-support)
+Stripe is available in the United States, Canada, the UK, Australia, Belgium, France, Germany, Ireland, The Netherlands
+and more – see [What countries does stripe support?](https://stripe.com/global)
+
+Stripe advantages:
+
+*   "Proven fraud protection", stripe actively works to protect your business from fraudulent charges and monitors suspicious transactions.
+*   "Act locally, work globally", work with international customers right out of the box while still getting paid in your preferred currency.
+*   "Operations, simplified", handling billing support and disputes is easy with Stripe — address issues with a few clicks, or automate it.
+*   "Battle-tested systems", [high availability](https://status.stripe.com/), transparent uptime reporting, and always ready for high transaction throughput.
+*   "Seamless security", stripe provides security and compliance without the headaches.
 
 Please, read the the **[official plugin documentation](http://yithemes.com/docs-plugins/yith-woocommerce-stripe)** to know all plugin features.
-
-
-= Installation =
-
-Once you have installed the plugin, you just need to activate the plugin in order to enable it.
-
-= Configuration =
-
-YITH WooCommerce Stripe will add a new settings tab called "Stripe", into Woocommerce -> Settings -> Checkout -> Stripe. Here you are able to configure all the plugin settings.
-You need to register an account to [Stripe.com](https://stripe.com/) and set the API key in the plugin settings.
-You can get the API keys from [your stripe dashboard](https://dashboard.stripe.com/account/apikeys).
 
 
 = Support =
@@ -45,6 +43,12 @@ Here we provide support, not on wordpress.org were, usually we do not read topic
 1. Unzip the downloaded zip file.
 2. Upload the plugin folder into the `wp-content/plugins/` directory of your WordPress site.
 3. Activate `YITH WooCommerce Stripe` from Plugins page
+
+= Configuration =
+
+YITH WooCommerce Stripe will add a new settings tab called "Stripe", into Woocommerce -> Settings -> Checkout -> Stripe. Here you are able to configure all the plugin settings.
+You need to register an account to [Stripe.com](https://stripe.com/) and set the API key in the plugin settings.
+You can get the API keys from [your stripe dashboard](https://dashboard.stripe.com/account/apikeys).
 
 == Frequently Asked Questions ==
 
