@@ -71,6 +71,10 @@ Yes, an SSL certificate should always be used with Stripe. All pages that includ
 
 == Changelog ==
 
+= 1.0.1 =
+
+* Fixed: minor bugs
+
 = 1.0.0 =
 
 * Initial release

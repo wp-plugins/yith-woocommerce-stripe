@@ -9,8 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="wrap woocommerce">
-	<form method="post" id="mainform" action="" enctype="multipart/form-data">
+	<form method="post" id="plugin-fw-wc" action="" enctype="multipart/form-data">
 		<div class="icon32 icon32-woocommerce-settings" id="icon-woocommerce"><br /></div>
+
+		<?php if ( method_exists( $this->_panel, 'print_video_box' ) ) { $this->_panel->print_video_box(); } ?>
 
 		<?php do_action( 'woocommerce_settings_checkout' ); ?>
 

@@ -7,6 +7,8 @@
  * @version 1.0.0
  */
 
+use \Stripe\Error;
+
 if ( ! defined( 'YITH_WCSTRIPE' ) ) {
 	exit;
 } // Exit if accessed directly
@@ -20,9 +22,40 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 	class YITH_WCStripe_Gateway extends WC_Payment_Gateway {
 
 		/**
+		 * @var YITH_Stripe_API API Library
+		 */
+		public $api = null;
+
+		/**
 		 * @var array List of standard localized message errors of Stripe SDK
 		 */
 		public $errors = array();
+
+		/**
+		 * @var string The domain of this site used to identifier the website from Stripe
+		 */
+		public $instance = '';
+
+		/**
+		 * @var array Zero decimals currencies
+		 */
+		protected $zero_decimals = array(
+			'BIF',
+			'CLP',
+			'DJF',
+			'GNF',
+			'JPY',
+			'KMF',
+			'KRW',
+			'MGA',
+			'PYG',
+			'RWF',
+			'VND',
+			'VUV',
+			'XAF',
+			'XOF',
+			'XPF'
+		);
 
 		/**
 		 * @var array List cards
@@ -39,8 +72,6 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 		/**
 		 * Constructor.
 		 *
-		 * @param array $details
-		 *
 		 * @return \YITH_WCStripe_Gateway
 		 * @since 1.0.0
 		 */
@@ -52,6 +83,7 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 			$this->supports           = array(
 				'products'
 			);
+			$this->instance = preg_replace( '/http(s)?:\/\//', '', site_url() );
 
 			// Load the settings.
 			$this->init_form_fields();
@@ -84,14 +116,14 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 		 * @return void
 		 */
 		public function init_stripe_sdk() {
-			if ( class_exists( 'Stripe' ) ) {
+			if ( is_a( $this->api, 'YITH_Stripe_Api' ) ) {
 				return;
 			}
 
 			// Include lib
-			require_once( 'third-party/lib/Stripe.php' );
+			require_once( 'class-yith-stripe-api.php' );
 
-			Stripe::setApiKey( $this->private_key );
+			$this->api = new YITH_Stripe_API( $this->private_key );
 		}
 
 		/**
@@ -100,13 +132,7 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 		 * @since 1.0.0
 		 */
 		protected function errors() {
-			$this->erros = array(
-
-				// Types
-				'invalid_request_error' => __( 'Invalid request errors arise when your request has invalid parameters.', 'yith-stripe' ),
-				'api_error'             => __( 'API errors cover any other type of problem (e.g. a temporary problem with Stripe\'s servers) and should turn up only very infrequently.', 'yith-stripe' ),
-				'card_error'            => __( 'Card errors are the most common type of error you should expect to handle. They result when the user enters a card that can\'t be charged for some reason.', 'yith-stripe' ),
-
+			$this->errors = array(
 				// Codes
 				'incorrect_number'      => __( 'The card number is incorrect.', 'yith-stripe' ),
 				'invalid_number'        => __( 'The card number is not a valid credit card number.', 'yith-stripe' ),
@@ -217,12 +243,12 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 				'testing'         => array(
 					'title'       => __( 'Testing & Debug', 'yith-stripe' ),
 					'type'        => 'title',
-					'description' => __( 'Enable here the testing mode, to debug the payment system before to go in production', 'yith-stripe' ),
+					'description' => __( 'Enable here the testing mode, to debug the payment system before going into production', 'yith-stripe' ),
 				),
 				'enabled_test_mode'    => array(
 					'title'   => __( 'Enable Test Mode', 'yith-stripe' ),
 					'type'    => 'checkbox',
-					'label'   => __( 'Check this option if you want to test the gateway before to go in production', 'yith-stripe' ),
+					'label'   => __( 'Check this option if you want to test the gateway before going into production', 'yith-stripe' ),
 					'default' => 'yes'
 				),
 				'keys'                 => array(
@@ -295,57 +321,48 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 		 * @param $order  WC_Order
 		 *
 		 * @return array
-		 * @throws Stripe_CardError
 		 * @since 1.0.0
 		 */
 		protected function pay( $order ) {
-			try {
+			// Initializate SDK and set private key
+			$this->init_stripe_sdk();
 
-				// Initializate SDK and set private key
-				$this->init_stripe_sdk();
+			$params = array(
+				'amount'      => $this->get_amount( $order->order_total ), // Amount in cents!
+				'currency'    => strtoupper( get_woocommerce_currency() ),
+				'source'      => $this->token,
+				'description' => sprintf( __( '%s - Order %s', 'yith-stripe' ), esc_html( get_bloginfo( 'name' ) ), $order->get_order_number() ),
+				'metadata'    => array(
+					'order_id' => $order->id,
+					'instance' => $this->instance
+				)
+			);
 
-				$params = array(
-					'amount'      => $this->get_amount( $order->order_total ), // Amount in cents!
-					'currency'    => strtoupper( get_woocommerce_currency() ),
-					'card'        => $this->token,
-					'description' => sprintf( __( '%s - Order %s', 'yith-stripe' ), esc_html( get_bloginfo( 'name' ) ), $order->get_order_number() )
-				);
+			$charge = $this->api->charge( $params );
 
-				$charge = Stripe_Charge::create( $params );
-
-				if ( $charge->paid == true ) { // Whohoo!
-
-					// Payment complete
-					$order->payment_complete( $charge->id );
-
-					// Add order note
-					$order->add_order_note( sprintf( __( 'Stripe payment approved (ID: %s)', 'yith-stripe' ), $charge->id ) );
-
-					// Remove cart
-					WC()->cart->empty_cart();
-
-					// Return thank you page redirect
-					return array(
-						'result'   => 'success',
-						'redirect' => $this->get_return_url( $order )
-					);
-
-				} else {
-
-					$order->add_order_note( __( 'Stripe payment declined', 'yith-stripe' ) );
-
-					throw new Stripe_CardError( __( 'Payment was declined - please try another card.', 'yith-stripe' ) );
-
-				}
-
-			} catch ( Stripe_Error $e ) {
-
-				return array(
-					'result' => 'fail',
-					'error'  => $e->getMessage()
-				);
-
+			// save if bitcoin
+			if ( isset( $charge->inbound_address ) && isset( $charge->bitcoin_uri ) ) {
+				update_post_meta( $order->id, '_bitcoin_inbound_address', $charge->inbound_address );
+				update_post_meta( $order->id, '_bitcoin_uri', $charge->bitcoin_uri );
 			}
+
+			// Payment complete
+			$order->payment_complete( $charge->id );
+
+			// Add order note
+			$order->add_order_note( sprintf( __( 'Stripe payment approved (ID: %s)', 'yith-stripe' ), $charge->id ) );
+
+			// Remove cart
+			WC()->cart->empty_cart();
+
+			// update post meta
+			update_post_meta( $order->id, '_captured', ( $charge->captured ? 'yes' : 'no' ) );
+
+			// Return thank you page redirect
+			return array(
+				'result'   => 'success',
+				'redirect' => $this->get_return_url( $order )
+			);
 		}
 
 		/**
@@ -365,7 +382,8 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 				'zip-code'     => $order->billing_postcode,
 				'label'        => __( 'Proceed to payment', 'yith-stripe' ),
 				'email'        => $order->billing_email,
-				'image'        => $this->modal_image
+				'image'        => $this->modal_image,
+				'capture'      => 'true'
 			), $order->id );
 
 			return $args;
@@ -454,33 +472,46 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 		/**
 		 * Get Stripe amount to pay
 		 *
+		 * @param $total
+		 * @param string $currency
+		 *
 		 * @return float
 		 * @since 1.0.0
 		 */
-		public function get_amount( $total ) {
-			switch ( get_woocommerce_currency() ) {
-				// Zero decimal currencies
-				case 'BIF' :
-				case 'CLP' :
-				case 'DJF' :
-				case 'GNF' :
-				case 'JPY' :
-				case 'KMF' :
-				case 'KRW' :
-				case 'MGA' :
-				case 'PYG' :
-				case 'RWF' :
-				case 'VND' :
-				case 'VUV' :
-				case 'XAF' :
-				case 'XOF' :
-				case 'XPF' :
-					$total = absint( $total );
-					break;
-				default :
-					$total = $total * 100; // In cents
-					break;
+		public function get_amount( $total, $currency = '' ) {
+			if ( empty( $currency ) ) {
+				$currency = get_woocommerce_currency();
 			}
+
+			if ( in_array( $currency, $this->zero_decimals ) ) {
+				$total = absint( $total );
+			} else {
+				$total *= 100;
+			}
+
+			return $total;
+		}
+
+		/**
+		 * Get original amount
+		 *
+		 * @param $total
+		 * @param string $currency
+		 *
+		 * @return float
+		 * @since 1.0.0
+		 */
+		public function get_original_amount( $total, $currency = '' ) {
+			if ( empty( $currency ) ) {
+				$currency = get_woocommerce_currency();
+			}
+
+			if ( in_array( $currency, $this->zero_decimals ) ) {
+				$total = absint( $total );
+			} else {
+				$total /= 100;
+			}
+
 			return $total;
 		}
 
