@@ -165,7 +165,7 @@ if( ! class_exists( 'YITH_WCStripe_Admin' ) ){
 			$links[] = '<a href="' . admin_url( "admin.php?page=yith_stripe_panel" ) . '">' . __( 'Settings', 'yith-stripe' ) . '</a>';
 
 			if ( defined( 'YITH_WCSTRIPE_FREE_INIT' ) ) {
-				$links[] = '<a href="' . $this->_premium_landing . '" target="_blank">' . __( 'Premium Version', 'yith-stripe' ) . '</a>';
+				$links[] = '<a href="' . $this->get_premium_landing_uri() . '" target="_blank">' . __( 'Premium Version', 'yith-stripe' ) . '</a>';
 			}
 
 			return $links;
@@ -236,6 +236,17 @@ if( ! class_exists( 'YITH_WCStripe_Admin' ) ){
 			if ( file_exists( $premium_tab_template ) ) {
 				include_once( $premium_tab_template );
 			}
+		}
+
+		/**
+		 * Get the premium landing uri
+		 *
+		 * @since   1.0.0
+		 * @author  Andrea Grillo <andrea.grillo@yithemes.com>
+		 * @return  string The premium landing link
+		 */
+		public function get_premium_landing_uri() {
+			return defined( 'YITH_REFER_ID' ) ? $this->_premium_landing . '?refer_id=' . YITH_REFER_ID : $this->_premium_landing;
 		}
 	}
 }

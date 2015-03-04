@@ -4,7 +4,7 @@ Contributors: yithemes
 Tags: stripe, simple stripe checkout, stripe checkout, credit cards, online payment, payment, payments, recurring billing, subscribe, subscriptions, bitcoin, gateway, yithemes, woocommerce, shop, ecommerce, e-commerce
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ Yes, an SSL certificate should always be used with Stripe. All pages that includ
 4. Settings
 
 == Changelog ==
+
+= 1.0.2 =
+
+* Updated: Plugin core framework
 
 = 1.0.1 =
 

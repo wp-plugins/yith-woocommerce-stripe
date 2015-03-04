@@ -198,7 +198,7 @@
                     Upgrade to the <span class="highlight">premium version</span>
                     of <span class="highlight">YITH WooCommerce Stripe</span> to benefit from all features!
                 </p>
-                <a href="http://yithemes.com/themes/plugins/yith-woocommerce-stripe/" target="_blank" class="premium-cta-button button btn">
+                <a href="<?php echo YITH_WCStripe()->admin->get_premium_landing_uri() ?>" target="_blank" class="premium-cta-button button btn">
                     <span class="highlight">UPGRADE</span>
                     <span>to the premium version</span>
                 </a>
@@ -304,7 +304,7 @@
                     Upgrade to the <span class="highlight">premium version</span>
                     of <span class="highlight">YITH WooCommerce Stripe</span> to benefit from all features!
                 </p>
-                <a href="http://yithemes.com/themes/plugins/yith-woocommerce-stripe/" target="_blank" class="premium-cta-button button btn">
+                <a href="<?php echo YITH_WCStripe()->admin->get_premium_landing_uri() ?>" target="_blank" class="premium-cta-button button btn">
                     <span class="highlight">UPGRADE</span>
                     <span>to the premium version</span>
                 </a>

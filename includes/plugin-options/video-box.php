@@ -35,7 +35,7 @@ return array(
 		'title_second_column' => __( 'Get Support and Pro Features', 'yith-stripe' ),
 		'description_second_column' => __('By purchasing the premium version of the plugin, you will take advantage of the advanced features of the product and you will get one year of free updates and support through our platform available 24h/24.', 'yith-stripe'),
 		'button' => array(
-			'href' => 'http://yithemes.com/themes/plugins/yith-woocommerce-stripe/',
+			'href' => YITH_WCStripe()->admin->get_premium_landing_uri(),
 			'title' => __( 'Get Support and Pro Features', 'yith-stripe' )
 		)
 	),
