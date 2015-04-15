@@ -3,8 +3,8 @@
 Contributors: yithemes
 Tags: stripe, simple stripe checkout, stripe checkout, credit cards, online payment, payment, payments, recurring billing, subscribe, subscriptions, bitcoin, gateway, yithemes, woocommerce, shop, ecommerce, e-commerce
 Requires at least: 4.0
-Tested up to: 4.1
-Stable tag: 1.0.2
+Tested up to: 4.1.1
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,14 +27,6 @@ Stripe advantages:
 *   "Seamless security", stripe provides security and compliance without the headaches.
 
 Please, read the the **[official plugin documentation](http://yithemes.com/docs-plugins/yith-woocommerce-stripe)** to know all plugin features.
-
-
-= Support =
-Already knew it, right?! Great, but maybe you do not know that: if you're looking for how to install the plugins or how to use them within your Wordpress installations, which is the right way to ask support?
-That's the way:
-
-* Register on http://yithemes.com
-* Go to Support > Get Support
 
 Here we provide support, not on wordpress.org were, usually we do not read topics. It's better to follow us or write on our forum!
 
@@ -70,6 +62,11 @@ Yes, an SSL certificate should always be used with Stripe. All pages that includ
 4. Settings
 
 == Changelog ==
+
+= 1.0.3 =
+
+* Updated: Stripe API
+* Fixed: minor bugs
 
 = 1.0.2 =
 

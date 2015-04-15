@@ -103,11 +103,6 @@ if( ! class_exists( 'YITH_WCStripe' ) ){
 
 			// add filter to append wallet as payment gateway
 			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_to_gateways' ) );
-
-			/**
-			 * TODO Creare cron che controlli gli ordini in processing per più di 7 giorni e annullarli
-			 * TODO Controllare che ci sia modo di rintracciare la possibilità di segnare completed un ordine con pagamento catturato dall'account di stripe (forse webhook)
-			 */
 		}
 
 		/**
