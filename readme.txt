@@ -28,8 +28,6 @@ Stripe advantages:
 
 Please, read the the **[official plugin documentation](http://yithemes.com/docs-plugins/yith-woocommerce-stripe)** to know all plugin features.
 
-Here we provide support, not on wordpress.org were, usually we do not read topics. It's better to follow us or write on our forum!
-
 == Installation ==
 
 1. Unzip the downloaded zip file.
