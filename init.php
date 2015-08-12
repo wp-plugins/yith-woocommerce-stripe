@@ -3,7 +3,7 @@
  * Plugin Name: YITH WooCommerce Stripe
  * Plugin URI: http://yithemes.com/themes/plugins/yith-woocommerce-stripe/
  * Description: Allows you to add Stripe gateway payment to WooCommerce
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: YIThemes
  * Author URI: http://yithemes.com/
  * Text Domain: yith-stripe
@@ -78,7 +78,7 @@ if ( ! defined( 'YITH_WCSTRIPE' ) ) {
 if ( defined( 'YITH_WCSTRIPE_VERSION' ) ) {
 	return;
 }else{
-	define( 'YITH_WCSTRIPE_VERSION', '1.1.0' );
+	define( 'YITH_WCSTRIPE_VERSION', '1.2.0' );
 }
 
 if ( ! defined( 'YITH_WCSTRIPE_FILE' ) ) {

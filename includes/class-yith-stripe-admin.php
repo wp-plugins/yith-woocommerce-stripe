@@ -68,9 +68,9 @@ if( ! class_exists( 'YITH_WCStripe_Admin' ) ){
 		 * @since 2.0.0
 		 */
 		public function register_panel() {
-			$admin_tabs = array(
+			$admin_tabs = apply_filters( 'yith_stripe_admin_panels', array(
 				'settings' => __( 'Settings', 'yith-stripe' )
-			);
+			) );
 
 			if ( defined( 'YITH_WCSTRIPE_FREE_INIT' ) ) {
 				$admin_tabs['premium'] = __( 'Premium Version', 'yith-stripe' );
@@ -162,7 +162,7 @@ if( ! class_exists( 'YITH_WCStripe_Admin' ) ){
 		 */
 		public function action_links( $links ) {
 
-			$links[] = '<a href="' . admin_url( "admin.php?page=yith_stripe_panel" ) . '">' . __( 'Settings', 'yith-stripe' ) . '</a>';
+			$links[] = '<a href="' . admin_url( "admin.php?page=yith_wcstripe_panel" ) . '">' . __( 'Settings', 'yith-stripe' ) . '</a>';
 
 			if ( defined( 'YITH_WCSTRIPE_FREE_INIT' ) ) {
 				$links[] = '<a href="' . $this->get_premium_landing_uri() . '" target="_blank">' . __( 'Premium Version', 'yith-stripe' ) . '</a>';

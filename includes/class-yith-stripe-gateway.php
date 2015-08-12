@@ -198,7 +198,24 @@ if ( ! class_exists( 'YITH_WCStripe_Gateway' ) ) {
 				return false;
 			}
 
+			if ( WC()->cart && 0 < $this->get_order_total() && 0 < $this->max_amount && $this->max_amount < $this->get_order_total() ) {
+				return false;
+			}
+
+			if ( $this->is_blocked() ) {
+				return false;
+			}
+
 			return true;
+		}
+
+		/**
+		 * Method to check blacklist (only for premium)
+		 *
+		 * @since 1.1.3
+		 */
+		public function is_blocked() {
+			return false;
 		}
 
 		/**
